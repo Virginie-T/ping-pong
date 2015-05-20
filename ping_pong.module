@@ -1,0 +1,26 @@
+<?php
+
+function ping_pong_menu() {
+    $items = array();
+    $items['ping_pong'] = array(
+        'title' => 'Ping Pong Problem',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('ping_pong_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+        $items['success'] = array(
+        'title' => 'Success',
+        'page callback' => 'ping_pong_success',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function ping_pong_form() {
+    $form['count_goal'] = array(
+        '#title' => 'Count Goal',
+        '#type' => 'textfield',
+        '#description' => t('Please enter the number you want to count up to.'),
+    );
