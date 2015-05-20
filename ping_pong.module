@@ -24,3 +24,41 @@ function ping_pong_form() {
         '#type' => 'textfield',
         '#description' => t('Please enter the number you want to count up to.'),
     );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Go',
+    );
+
+    return $form;
+}
+
+function ping_pong_form_submit($form, &$form_state) {
+
+    $count_max = $form_state['values']['count_goal'];
+    $pingpong_output = array();
+
+    for ($i = 1; $i <= $count_max; $i++) {
+        if ($i % 3 == 0 && $i % 5 ==0) {
+            array_push($pingpong_output, 'ping-pong');
+        } elseif ($i % 3 ==0) {
+            array_push($pingpong_output, 'pong');
+        } elseif ($i % 5 == 0) {
+            array_push($pingpong_output, 'pong');
+        } else {
+            array_push($pingpong_output, $i);
+        }
+    }
+
+    $_SESSION['ping_pong_output'] = $pingpong_output;
+    $form_state['redirect'] = 'success';
+}
+
+function ping_pong_success() {
+    $output = '<ul';
+    foreach ($_SESSION['ping_pong_output'] as $value) {
+        $output = $output . '<li>' . $value . '</li>';
+    }
+    $output = $output . '</ul>';
+    return "Hooray! $output";
+}
